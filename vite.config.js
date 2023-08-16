@@ -17,18 +17,23 @@ function devServerMiddleware(){
             const url = req.originalUrl  // 获取请求的源路径
             if((url.startsWith("/svg/") || url.startsWith("/png/") || url.startsWith("/icon/") || url.startsWith("/canvasDraw/") || url.startsWith("/path2D/"))  && url.endsWith("/")){  // 路径判断 特殊处理svg和png路径的
                 const pwd = decodeURI(path.join(__dirname, 'public', url));  // 路径
-                const files = fs.readdirSync(pwd, {  //  同步读取文件夹
-                    withFileTypes: true,
-                });
-                const list = [];
-                for (const item of files) {
-                    if (item.isDirectory()) {  // 判断是否为文件夹
-                        list.push({ name: item.name, type: 'directory' });
-                    } else {  // 非文件夹  则返回文件名  为了懒加载实现
-                        list.push({ name: item.name });
+                try {
+                    const files = fs.readdirSync(pwd, {  //  同步读取文件夹
+                        withFileTypes: true,
+                    });
+                    const list = [];
+                    for (const item of files) {
+                        if (item.isDirectory()) {  // 判断是否为文件夹
+                            list.push({ name: item.name, type: 'directory' });
+                        } else {  // 非文件夹  则返回文件名  为了懒加载实现
+                            list.push({ name: item.name });
+                        }
                     }
+                    res.end(JSON.stringify(list));
+                }catch (e){
+                    return
                 }
-                res.end(JSON.stringify(list));
+
             }else {
                 next()  // 跳到下一步
             }

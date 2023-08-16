@@ -1,7 +1,6 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import MapProps from "./MapProps/Map.vue";
-import Communication from "./MapProps/Communication.vue";
 import Global from "./MapProps/Global.vue";
 import Appearance from "./PenProps/Appearance.vue";
 import Event from "./PenProps/Event.vue";
