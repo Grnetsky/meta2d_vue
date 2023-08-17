@@ -31,7 +31,8 @@ function devServerMiddleware(){
                     }
                     res.end(JSON.stringify(list));
                 }catch (e){
-                    return
+                    console.error(e)
+                    next()
                 }
 
             }else {

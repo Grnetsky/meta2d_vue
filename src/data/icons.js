@@ -1942,14 +1942,12 @@ async function addIcons(url){
        iconGroup.list.push({  // 侧边栏信息
            name: item.name,
            icon:  // 侧边栏目显示
-               data.font_family +
-               ' ' +
                data.css_prefix_text +
                item.font_class,
            data: {   // 配置图元信息
                width: 100,
                height: 100,
-               name: 'icon',
+               name: 'icon', // 指定为icon类型
                iconFamily: data.font_family, // 字体图标配置
                icon: String.fromCharCode(item.unicode_decimal),  // 字体图标
            },

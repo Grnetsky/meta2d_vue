@@ -1,0 +1,72 @@
+{
+  "id": "4214195",
+  "name": "meta2d_vue 教程项目",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "281470",
+      "name": "collect",
+      "font_class": "collect",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "281471",
+      "name": "collect2",
+      "font_class": "collect2",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "886676",
+      "name": "结束",
+      "font_class": "jieshu",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "886688",
+      "name": "education",
+      "font_class": "education",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "886689",
+      "name": "exit-fullscreen",
+      "font_class": "exitfullscreen",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "886690",
+      "name": "fensi",
+      "font_class": "fensi",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "886691",
+      "name": "friend",
+      "font_class": "friend",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "5387605",
+      "name": "三角形_上",
+      "font_class": "sanjiaoxing_shang",
+      "unicode": "eb11",
+      "unicode_decimal": 60177
+    },
+    {
+      "icon_id": "5387953",
+      "name": "三角形_o",
+      "font_class": "sanjiaoxing_o",
+      "unicode": "eb9c",
+      "unicode_decimal": 60316
+    }
+  ]
+}
