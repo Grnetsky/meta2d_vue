@@ -10,7 +10,7 @@ jobs:
       - uses: action/checkout@v2
 
       - name: install nodeJs
-      - uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v2.5.1
         with:
           node-version: "14.X"
       - name: install deps
