@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: action/checkout@v2
+      - uses: action/checkout@v4.0.0
       - name: install nodeJs
         uses: actions/setup-node@v2.5.1
         with:
