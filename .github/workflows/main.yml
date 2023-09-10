@@ -1,0 +1,28 @@
+name: deploy_meta2d
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: install nodeJs
+        uses: actions/setup-node@v2.5.1
+        with:
+          node-version: "14.X"
+      - name: install deps
+        run: npm install
+      - name: build app
+        run: npm run build
+      - name: copy dist with scp
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{secrets.REMOTE_HOST}}
+          username: ${{secrets.REMOTE_USERNAME}}
+          password: ${{secrets.REMOTE_PASSWORD}}
+          port: 22
+          source: "dist/"
+          target: ${{secrets.REMOTE_TARGET}}
+      
