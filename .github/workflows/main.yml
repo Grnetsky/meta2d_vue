@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: action/checkout@v4.0.0
+      - uses: actions/checkout@v3
       - name: install nodeJs
         uses: actions/setup-node@v2.5.1
         with:
@@ -17,7 +17,7 @@ jobs:
       - name: build app
         run: npm run build
       - name: copy dist with scp
-        uses: appleboy/scp-action@v0.0.1
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{secrets.REMOTE_HOST}}
           username: ${{secrets.REMOTE_USERNAME}}
