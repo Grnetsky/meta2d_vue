@@ -310,6 +310,7 @@ const menuFunc = {
         }
     },
     async loadFile() {
+        // 该方法有兼容性问题
         const file = await window.showOpenFilePicker().catch(() => {
             ElMessage({message: '打开文件失败', type: "error"})
             return false
