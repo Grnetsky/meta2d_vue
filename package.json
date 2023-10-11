@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --mode base --base='/2d/'",
     "preview": "vite preview"
   },
   "dependencies": {
