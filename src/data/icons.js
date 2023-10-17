@@ -683,13 +683,13 @@ export const defaultIcons =[
         show: true,
         list: [
             {
-                name: 'mindNode',
+                name: 'de',
                 icon: 'l-zhuti',
                 data: {
                     text: '主题',
                     width: 200,
                     height: 50,
-                    name: 'mindNode',
+                    name: 'mindNode2',
                     borderRadius: 0.5,
                 },
             },
