@@ -5,7 +5,7 @@ import App from './App.vue'
 const app = createApp(App)
 app.use(ElementPlus) // 全局安装ElementPlus
 app.mount('#app')
-import MyCount from "./components/hello/hello.ce.vue";  // 引入计数器组件
+import MyCount from "@/components/hello/hello.ce.vue";  // 引入计数器组件
 
 const CustomElement = defineCustomElement(MyCount);
 
