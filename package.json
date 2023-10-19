@@ -19,13 +19,15 @@
     "@meta2d/svg": "^1.0.2",
     "axios": "^1.4.0",
     "element-plus": "^2.3.7",
-    "mind-diagram": "1.1.4",
-    "mind-plugins-collapse": "1.1.4",
-    "mind-plugins-core": "1.1.4",
+    "mind-diagram": "0.1.0",
+    "mind-plugins-collapse": "0.1.0",
+    "mind-plugins-core": "0.1.0",
     "mitt": "^3.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/web-component-wrapper": "^1.3.0",
+    "sass": "^1.69.4",
     "vite": "^4.4.7"
   }
 }
