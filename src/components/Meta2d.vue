@@ -1,5 +1,5 @@
 <script setup>
-import { Meta2d } from "@meta2d/core"
+import {deepClone, Meta2d} from "@meta2d/core"
 import { flowPens} from "@meta2d/flow-diagram";
 import {
   activityDiagram,
@@ -7,8 +7,9 @@ import {
 } from "@meta2d/activity-diagram";
 import { sequencePens, sequencePensbyCtx } from "@meta2d/sequence-diagram";
 import { classPens } from "@meta2d/class-diagram";
-import { mindPens,installPlugin } from "mind-diagram"
+import { mindPens,installPlugin,getPlugin,uninstallPlugin } from "mind-diagram"
 import { CollapseChildPlugin } from "mind-plugins-collapse";
+import {createDom, toolBoxPlugin} from "mind-plugins-core"
 import { myTriangle, myTriangleAnchors} from "../../public/path2D/mypath2d/myTriangle.js";
 import { register as registerEcharts,registerHighcharts,registerLightningChart  } from "@meta2d/chart-diagram"; // 引入echarts注册函数，原函数名为register 为了与其他注册函数区分这里重命名为registerEcharts
 import { formPens } from '@meta2d/form-diagram';
@@ -17,8 +18,11 @@ import {canvasTriangle, canvasTriangleAnchors} from "../../public/canvasDraw/myC
 import {useEventbus} from "../hooks/useEventbus.js";
 import Contextmenu from "./Contextmenu.vue";
 const event = useEventbus()
-onMounted(()=>{
-  console.log('meta2d')
+
+import './hello/index.ts';
+
+
+onMounted(async ()=>{
   // 创建meta2d对象
   let meta2d = new Meta2d("meta2d")
   meta2d.register(flowPens())
@@ -35,6 +39,8 @@ onMounted(()=>{
   // 注册类图
   meta2d.register(classPens())
   meta2d.register(mindPens())
+  installPlugin(toolBoxPlugin)
+  // uninstallPlugin('toolBox')
   // 注册表单图元
   meta2d.registerCanvasDraw(formPens())
 
@@ -45,7 +51,37 @@ onMounted(()=>{
   registerHighcharts()
   // 直接调用LightningChart的注册函数
   registerLightningChart()
+
   installPlugin(CollapseChildPlugin)
+
+  let a = getPlugin('toolBox')
+  // a.setFuncList({
+  //   'root':[
+  //     {
+  //       name: "测试",
+  //       event: 'click',
+  //       func(self,pen){
+  //         console.log(self,pen)
+  //       },
+  //
+  //       setDom(self,dom){
+  //         let html = `<div>
+  //               测试按钮
+  //           </div>`
+  //         let css = `<style>
+  //               div {
+  //               color: pink;
+  //               }
+  //           </style>`
+  //         return html + css
+  //       }
+  //     }
+  //   ],
+  //   'leaf':[{
+  //     name: "测试2"
+  //   }
+  //   ]
+  // })
   //注册自定义path2d图元
   meta2d.register({myTriangle})
   // 注册自定义图元的m锚点信息
@@ -57,6 +93,19 @@ onMounted(()=>{
   meta2d.registerAnchors({canvasTriangle:canvasTriangleAnchors})
   event.customEmit('opened')
   event.customEmit('load')
+
+
+  // // 获取插件
+  // let a = await getPlugin('toolBox')
+  // // a.setFuncList({'A':[{
+  // //     name:"颜色"
+  // //   },],'B':[{
+  // //   name:'666'
+  // //   }]})
+  // // a.getFuncList = (pen)=>{
+  // //   return a.funcList['A']
+  // // };
+  // a.childrenGap = 100
 })
 
 
