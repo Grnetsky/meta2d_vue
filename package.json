@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
-    "@vue/web-component-wrapper": "^1.3.0",
     "sass": "^1.69.4",
     "vite": "^4.4.7"
   }
