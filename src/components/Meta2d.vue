@@ -7,8 +7,6 @@ import {
 } from "@meta2d/activity-diagram";
 import { sequencePens, sequencePensbyCtx } from "@meta2d/sequence-diagram";
 import { classPens } from "@meta2d/class-diagram";
-import { CollapseChildPlugin } from "mind-plugins-collapse";
-import {createDom, toolBoxPlugin} from "mind-plugins-core"
 import { myTriangle, myTriangleAnchors} from "../../public/path2D/mypath2d/myTriangle.js";
 import { register as registerEcharts,registerHighcharts,registerLightningChart  } from "@meta2d/chart-diagram"; // 引入echarts注册函数，原函数名为register 为了与其他注册函数区分这里重命名为registerEcharts
 import {computed, nextTick, onMounted, reactive, ref} from "vue";
