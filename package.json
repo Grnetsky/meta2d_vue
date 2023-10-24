@@ -19,9 +19,6 @@
     "@meta2d/svg": "^1.0.2",
     "axios": "^1.4.0",
     "element-plus": "^2.3.7",
-    "mind-diagram": "0.1.0",
-    "mind-plugins-collapse": "0.1.0",
-    "mind-plugins-core": "0.1.0",
     "mitt": "^3.0.1"
   },
   "devDependencies": {
