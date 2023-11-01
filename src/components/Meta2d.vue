@@ -8,7 +8,7 @@ import {
 import { sequencePens, sequencePensbyCtx } from "@meta2d/sequence-diagram";
 import { classPens } from "@meta2d/class-diagram";
 import { mindPens,installPlugin,getPlugin } from "mind-diagram"
-import {createDom, toolBoxPlugin,defaultFuncs} from "mind-plugins-core"
+import {createDom, toolBoxPlugin,defaultFuncs} from "publish-mind-core"
 import { myTriangle, myTriangleAnchors} from "../../public/path2D/mypath2d/myTriangle.js";
 import { register as registerEcharts,registerHighcharts,registerLightningChart  } from "@meta2d/chart-diagram"; // 引入echarts注册函数，原函数名为register 为了与其他注册函数区分这里重命名为registerEcharts
 import { formPens } from '@meta2d/form-diagram';
