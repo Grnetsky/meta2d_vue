@@ -8,7 +8,7 @@ export default defineConfig({
       devServerMiddleware()],
     build:{
       rollupOptions:{
-          external:'@meta2d/core'
+          external:['@meta2d/core']
       }
     }
 })
