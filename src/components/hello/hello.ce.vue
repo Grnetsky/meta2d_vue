@@ -1,7 +1,7 @@
 // src/MyCount/MyCount.ce.vue
 <script setup lang="ts">
-import { ref } from 'vue';
-
+import { ref,defineProps } from 'vue';
+let props = defineProps(['name'])
 const count = ref(0);
 const addCount = () => {
   count.value = count.value + 1;
@@ -10,9 +10,9 @@ const addCount = () => {
 
 <template>
   <div class="container">
-    <span class="title">我来自web组件：</span>
+    <span class="title">我来自web组件：{{name}}</span>
     <span>计数器值: {{ count }}</span>
-    <button @click="addCount">点击增加</button>
+    <el-button type="primary" @click="addCount">点击增加</el-button>
   </div>
 </template>
 

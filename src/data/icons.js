@@ -602,6 +602,7 @@ export const defaultIcons =[
                     height: 30,
                     disableAnchor: true,
                     borderRadius: 2,
+                    target:'mind',
                     text: '按钮',
                     activeBackground: '#40a9ff',
                     activeColor: '#40a9ff',
@@ -622,6 +623,7 @@ export const defaultIcons =[
                     y: 100,
                     height: 40,
                     width: 200,
+                    target:'mind',
                     disableAnchor: true,
                     name: 'rectangle',
                     borderRadius: 0.05,
@@ -689,6 +691,7 @@ export const defaultIcons =[
                     text: '主题',
                     width: 200,
                     height: 50,
+                    target:'mind',
                     name: 'mindNode2',
                     borderRadius: 0.5,
                 },
@@ -716,6 +719,7 @@ export const defaultIcons =[
                 data: {
                     text: '开始/结束',
                     width: 120,
+                    target:'mind',
                     height: 40,
                     borderRadius: 0.5,
                     name: 'rectangle',
@@ -774,6 +778,7 @@ export const defaultIcons =[
                     width: 120,
                     height: 50,
                     name: 'hexagon',
+                    target:'mind'
                 },
             },
             {

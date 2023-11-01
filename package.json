@@ -4,9 +4,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host --open --port 8080",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "clean": "npm cache verify & rmdir /s/q node_modules & del package-lock.json & npm install & npm run dev"
   },
   "dependencies": {
     "@meta2d/activity-diagram": "^1.0.0",
@@ -19,6 +20,9 @@
     "@meta2d/svg": "^1.0.2",
     "axios": "^1.4.0",
     "element-plus": "^2.3.7",
+    "mind-diagram": "file:C:\\Users\\Andy\\Desktop\\大屏\\meta2d.js\\dist\\mind-diagram",
+    "mind-plugins-collapse": "file:C:\\Users\\Andy\\WebstormProjects\\mind-plugins-collapse",
+    "mind-plugins-core": "file:C:\\Users\\Andy\\WebstormProjects\\mind-plugins-core",
     "mitt": "^3.0.1"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 <script setup>
-import {deepClone, Meta2d} from "@meta2d/core"
+import {deepClone, Meta2d,connectLine} from "@meta2d/core"
 import { flowPens} from "@meta2d/flow-diagram";
 import {
   activityDiagram,
@@ -7,15 +7,16 @@ import {
 } from "@meta2d/activity-diagram";
 import { sequencePens, sequencePensbyCtx } from "@meta2d/sequence-diagram";
 import { classPens } from "@meta2d/class-diagram";
+import { mindPens,installPlugin,getPlugin } from "mind-diagram"
+import {createDom, toolBoxPlugin,defaultFuncs} from "mind-plugins-core"
 import { myTriangle, myTriangleAnchors} from "../../public/path2D/mypath2d/myTriangle.js";
 import { register as registerEcharts,registerHighcharts,registerLightningChart  } from "@meta2d/chart-diagram"; // 引入echarts注册函数，原函数名为register 为了与其他注册函数区分这里重命名为registerEcharts
+import { formPens } from '@meta2d/form-diagram';
 import {computed, nextTick, onMounted, reactive, ref} from "vue";
 import {canvasTriangle, canvasTriangleAnchors} from "../../public/canvasDraw/myCanvasDraw/canvasTriangle.js";
 import {useEventbus} from "../hooks/useEventbus.js";
 import Contextmenu from "./Contextmenu.vue";
 const event = useEventbus()
-
-import './hello/index.ts';
 
 
 onMounted(async ()=>{
@@ -34,9 +35,12 @@ onMounted(async ()=>{
 
   // 注册类图
   meta2d.register(classPens())
+  meta2d.register(mindPens())
+  installPlugin(toolBoxPlugin)
   // uninstallPlugin('toolBox')
   // 注册表单图元
   meta2d.registerCanvasDraw(formPens())
+  console.log(defaultFuncs.getAllFuncDocs())
 
   // 直接调用Echarts的注册函数
   registerEcharts()
@@ -46,7 +50,9 @@ onMounted(async ()=>{
   // 直接调用LightningChart的注册函数
   registerLightningChart()
 
+  // installPlugin(CollapseChildPlugin)
 
+  let a = getPlugin('toolBox')
   // a.setFuncList({
   //   'root':[
   //     {
