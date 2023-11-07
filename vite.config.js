@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
-import vuePlugin from '@vitejs/plugin-vue'
+import vue from '@vitejs/plugin-vue'
 import fs from "fs"
 import path from  "path"
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vuePlugin(),
+  plugins: [vue(),
       devServerMiddleware()],
     resolve: {
         alias: {
