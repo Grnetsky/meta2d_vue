@@ -1,4 +1,4 @@
-import {createDom, toolBoxPlugin,defaultFuncs,} from "mind-plugins-core"
+import {createDom, toolBoxPlugin,defaultFuncs} from "mind-plugins-core"
 
 let FuncList = [
     {
@@ -11,3 +11,4 @@ let FuncList = [
         }
     }
 ]
+

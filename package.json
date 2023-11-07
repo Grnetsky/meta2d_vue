@@ -10,18 +10,10 @@
     "clean": "npm cache verify & rmdir /s/q node_modules & del package-lock.json & npm install & npm run dev"
   },
   "dependencies": {
-    "@meta2d/activity-diagram": "^1.0.0",
-    "@meta2d/chart-diagram": "^1.0.3",
-    "@meta2d/class-diagram": "^1.0.1",
-    "@meta2d/core": "^1.0.20",
-    "@meta2d/flow-diagram": "^1.0.0",
-    "@meta2d/form-diagram": "^1.0.4",
-    "@meta2d/sequence-diagram": "^1.0.0",
-    "@meta2d/svg": "^1.0.2",
     "axios": "^1.4.0",
     "element-plus": "^2.3.7",
-    "mind-diagram": "0.0.1",
-    "publish-mind-core": "^0.0.1",
+    "mind-diagram": "0.0.3",
+    "publish-mind-core": "0.0.3",
     "mitt": "^3.0.1"
   },
   "devDependencies": {

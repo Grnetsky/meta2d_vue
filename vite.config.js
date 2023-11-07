@@ -6,6 +6,13 @@ import path from  "path"
 export default defineConfig({
   plugins: [vue(),
       devServerMiddleware()],
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src/'),
+            '@meta2d': path.resolve(__dirname, '../meta2d.js/packages')
+            // '@meta3d': path.resolve(__dirname, '../meta3d.js'),
+        },
+    },
 })
 
 function devServerMiddleware(){

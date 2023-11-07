@@ -7,7 +7,7 @@ import {
 } from "@meta2d/activity-diagram";
 import { sequencePens, sequencePensbyCtx } from "@meta2d/sequence-diagram";
 import { classPens } from "@meta2d/class-diagram";
-import { mindPens,installPlugin,getPlugin } from "mind-diagram"
+import { mindPens,installPlugin,getPlugin,mindAnchors } from "mind-diagram"
 import {createDom, toolBoxPlugin,defaultFuncs} from "publish-mind-core"
 import { myTriangle, myTriangleAnchors} from "../../public/path2D/mypath2d/myTriangle.js";
 import { register as registerEcharts,registerHighcharts,registerLightningChart  } from "@meta2d/chart-diagram"; // 引入echarts注册函数，原函数名为register 为了与其他注册函数区分这里重命名为registerEcharts
@@ -37,11 +37,11 @@ onMounted(async ()=>{
   meta2d.register(classPens())
   meta2d.register(mindPens())
   installPlugin(toolBoxPlugin)
+  meta2d.registerAnchors(mindAnchors())
   // uninstallPlugin('toolBox')
   // 注册表单图元
   meta2d.registerCanvasDraw(formPens())
   console.log(defaultFuncs.getAllFuncDocs())
-
   // 直接调用Echarts的注册函数
   registerEcharts()
 
