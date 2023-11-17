@@ -8,7 +8,8 @@ import {
 import { sequencePens, sequencePensbyCtx } from "@meta2d/sequence-diagram";
 import { classPens } from "@meta2d/class-diagram";
 import { mindPens,installPlugin,getPlugin,mindAnchors } from "mind-diagram"
-import {createDom, toolBoxPlugin,defaultFuncs} from "publish-mind-core"
+import { CollapseChildPlugin } from "mind-plugins-collapse"
+import {createDom, toolBoxPlugin, defaultFuncs, butterfly} from "mind-plugins-core"
 import { myTriangle, myTriangleAnchors} from "../../public/path2D/mypath2d/myTriangle.js";
 import { register as registerEcharts,registerHighcharts,registerLightningChart  } from "@meta2d/chart-diagram"; // 引入echarts注册函数，原函数名为register 为了与其他注册函数区分这里重命名为registerEcharts
 import { formPens } from '@meta2d/form-diagram';
@@ -35,13 +36,91 @@ onMounted(async ()=>{
 
   // 注册类图
   meta2d.register(classPens())
-  meta2d.register(mindPens())
-  installPlugin(toolBoxPlugin)
+  meta2d.register(mindPens(CollapseChildPlugin,toolBoxPlugin))
+
   meta2d.registerAnchors(mindAnchors())
   // uninstallPlugin('toolBox')
   // 注册表单图元
   meta2d.registerCanvasDraw(formPens())
   console.log(defaultFuncs.getAllFuncDocs())
+  let func = {
+    key:"func1",
+    name:"功能函数1",
+    img: "https://www.le5le.com/img/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_icon_%E7%89%A9%E8%81%94%E7%BD%91_selected.png",
+    event: "click",
+    func(self,pen,dom){
+      console.log('执行功能函数1',self,pen,dom)
+    },
+    children:[
+      {
+        key:'child1',
+        name:"子选项1",
+        event:"click",
+        func(self,pen,dom,father){
+          console.log("child1: ",self,pen,dom,father)
+        }
+      },
+      {
+        key:'child2',
+        img: "https://www.le5le.com/img/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88_icon_%E7%89%A9%E8%81%94%E7%BD%91_selected.png",
+        name:"子选项2",
+        event:"mouseenter",
+        func(self,pen,dom,father){
+          console.log("child2: ",self,pen,dom,father)
+        }
+      },
+      {
+        key:'child3',
+        icon:'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" t="1698915834790" class="icon" viewBox="0 0 1365 1024" version="1.1" p-id="13181" width="50" height="30"><path d="M920.32924106 188.22098215H435.74469865c-178.43219866 0-323.49023438 145.05719866-323.49023438 323.49023436 0 178.43219866 145.05803572 323.49023438 323.49023438 323.49023439h484.58454241c178.43303572 0 323.49023438-145.05803572 323.49023437-323.49023439 0.14481026-178.28822544-144.91322544-323.49023438-323.49023437-323.49023436z m2.65345982 603.01339285H439.05440848c-145.05719866 0-281.40652902-137.4375-281.40652903-281.19475447 0-145.05803572 132.71735492-270.29966518 277.77455357-270.29966518h489.52064732c145.05803572 0 272.32700893 131.98995536 272.32700893 275.74720983 0 143.61328125-129.22935267 275.74720982-274.28738839 275.74720982z" p-id="13182"/></svg>',
+        name:"子选项3",
+        setDom(self,dom){
+          let div = createDom('div',{color:'red'})
+          div.innerHTML = self.name
+          return div
+        },
+        event:"click",
+        func(self,pen,dom,father){
+          console.log("child3: ",self,pen,dom,father)
+        },
+        stopPropagation:true,
+      }
+    ],
+    closeShadowDom:true,
+    closeEven:false,
+    openChildDomEvent:'mouseenter',
+    closeChildDomEvent: 'mouseleave',
+    openEventOnTitle:false,
+    closeChildDom(self,pen,dom){
+      console.log('xxxxxxxcloase')
+      // dom.style.height = 'max-height'
+      // dom.style.visibility = 'hidden'
+      // dom.style.overflow = 'hidden'
+      // dom.style.transition = '.3s'
+      // dom.style.height = 0'
+      dom.style.transformOrigin = 'top';
+      dom.style.transform = 'scaleY(0)'
+      return true
+    },
+    openChildDom(self,pen,dom){
+      console.log('xxxxxxopen')
+      // // dom.style.transition ="all .3s ease"
+      // dom.style.overflow = 'hidden'
+      // // dom.style.height = '300px'
+      // dom.style.transition = 'none'
+      // dom.style.height = 'auto'
+      // const height = dom.offsetHeight
+      // dom.style.height = '0'
+      // dom.offsetHeight
+      dom.style.transition = 'all .3s'
+      // dom.style.height = height + 'px'
+      // console.log('123')
+      dom.style.transform = 'scaleY(1)'
+
+      return true
+    }
+  }
+  // toolBoxPlugin.setFuncList({'root':[func]})
+  butterfly.MAXLENGTH = 8
   // 直接调用Echarts的注册函数
   registerEcharts()
 

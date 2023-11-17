@@ -4,6 +4,7 @@ import { Search } from '@element-plus/icons-vue'
 
 import {computed, onMounted, reactive, ref, watch} from "vue";
 import axios from "axios";
+import {deepClone} from "@meta2d/core"
 const inputValue = ref("")
 let iconList =reactive([...defaultIcons])
 let dialogTableVisible = ref(false)
@@ -16,6 +17,10 @@ let showList = computed(()=>iconList.filter((i)=>i.show))
 function dragPen(data,e){
   const json = JSON.stringify(data)
   e.dataTransfer.setData("Meta2d",json)
+}
+
+function onTouchstart(data,e) {
+  meta2d.canvas.addCaches = deepClone([data]);
 }
 
 async function  changeState(tab){
@@ -72,7 +77,11 @@ function doSearch(value){
         <template v-for="(icons) in showList">
         <el-collapse-item :title="icons.name" @click="changeState(icons)">
           <div class="icon_container">
-            <div class="icon_item" v-for="(item,index) in icons.list" draggable="true" @dragstart="dragPen(item.data,$event)" :index="index" :title="item.name">
+            <div class="icon_item" v-for="(item,index) in icons.list" draggable="true"
+                 @dragstart="dragPen(item.data,$event)"
+                 @click.stop="onTouchstart(item.data, $data)"
+
+                 :index="index" :title="item.name">
 <!--              这里做了修改-->
               <svg v-if="item.icon" class="l-icon" aria-hidden="true">
                 <use :xlink:href="'#' + item.icon"></use>
