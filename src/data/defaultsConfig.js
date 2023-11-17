@@ -592,7 +592,7 @@ export const globalConfigProps = {
     minScale: 0.1,
     maxScale: 10,
     autoAnchor: true,
-    interval: 10,
+    interval: 60,
     animateInterval: 10,
     textRotate: true,
     textFlip: false
