@@ -42,7 +42,6 @@ onMounted(async ()=>{
   // uninstallPlugin('toolBox')
   // 注册表单图元
   meta2d.registerCanvasDraw(formPens())
-  console.log(defaultFuncs.getAllFuncDocs())
   let func = {
     key:"func1",
     name:"功能函数1",
@@ -131,7 +130,6 @@ onMounted(async ()=>{
 
   // installPlugin(CollapseChildPlugin)
 
-  let a = getPlugin('toolBox')
   // a.setFuncList({
   //   'root':[
   //     {
