@@ -36,7 +36,7 @@ onMounted(async ()=>{
 
   // 注册类图
   meta2d.register(classPens())
-  meta2d.register(mindPens(CollapseChildPlugin,toolBoxPlugin))
+  meta2d.register(mindPens(toolBoxPlugin,CollapseChildPlugin))
 
   meta2d.registerAnchors(mindAnchors())
   // uninstallPlugin('toolBox')
