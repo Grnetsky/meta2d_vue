@@ -14,18 +14,9 @@
     "element-plus": "^2.3.7",
     "mind-diagram": "^1.2.0",
     "mind-plugins-collapse": "^0.0.2",
-    "mind-plugins-core": "^1.0.24",
+    "mind-plugins-core": "^1.0.25",
     "mitt": "^3.0.1",
-    "vue": "^3.3.8",
-    "@meta2d/core": "^1.0.34",
-    "@meta2d/flow-diagram": "^1.0.0",
-    "@meta2d/activity-diagram": "^1.0.0",
-    "@meta2d/sequence-diagram": "^1.0.0",
-    "@meta2d/class-diagram": "1.0.1",
-    "@meta2d/chart-diagram": "^1.0.7",
-    "@meta2d/form-diagram": "^1.0.11",
-    "@meta2d/svg": "^1.0.4",
-    "@meta2d/le5le-charts": "^1.0.4"
+    "vue": "^3.3.8"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
