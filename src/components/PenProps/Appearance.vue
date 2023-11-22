@@ -9,13 +9,13 @@ import {deepClone} from "@meta2d/core";
 const multiPen = ref(false)
 const defaultConfig = deepClone(appearanceProps)  //深拷贝保存默认配置
 let m = reactive(appearanceProps) // 响应式数据源
-let activePen = {}
+let activePen = reactive({target:{}})
 
 // 更新属性方法
 function updateFunc(prop){
   return (value)=>{
     if(multiPen.value){
-      for(let i of activePen){
+      for(let i of activePen.target){
         meta2d.setValue({
           id:i.id,
           [prop]:value
@@ -24,7 +24,7 @@ function updateFunc(prop){
       meta2d.render()
     }else{
       meta2d.setValue({
-        id:activePen.id,
+        id:activePen.target.id,
         [prop]:value
       })
     }
@@ -32,21 +32,21 @@ function updateFunc(prop){
 }
 
 onMounted(()=>{
-  meta2d.on('active',(args)=>{
-    // 只修改一个
+  meta2d.on('active',(args)=>{// 只修改一个
     if(args.length>=1){
       multiPen.value = args.length > 1;
       if(multiPen.value){ // 批量修改
-        activePen = reactive(args)
+        activePen.target = reactive(args)
         // 以最后一个图元信息为主
-        for(let i of activePen){
+        for(let i of activePen.target){
           mergeProps(m,i)
         }
       }else{  // 修改一个
-        activePen=reactive(args[0])
+        activePen.target=reactive(args[0])
+        console.log(activePen.target)
         mergeProps(m,defaultConfig)
-        mergeProps(m,activePen)
-        const penRect = meta2d.getPenRect(toRaw(activePen))
+        mergeProps(m,activePen.target)
+        const penRect = meta2d.getPenRect(toRaw(activePen.target))
         Object.assign(m,penRect)
       }
     }
@@ -67,14 +67,15 @@ onMounted(()=>{
   meta2d.on('editPen',()=>{
     if(multiPen.value){
       // 若有多个图元，则设置以最后一个图元为主
-      for(let i of activePen){
+      for(let i of activePen.target){
         mergeProps(m,i)
       }
     }else {
-      mergeProps(m,activePen)
+      mergeProps(m,activePen.target)
     }
   })
 })
+
 
 const map = [
   {
@@ -91,9 +92,9 @@ const map = [
         bindProp:m,
         event:"change",
         func(value){
-          meta2d.setPenRect(toRaw(activePen),{x:value,y:activePen.y,width:activePen.width,height:activePen.height},false)
+          meta2d.setPenRect(toRaw(activePen.target),{x:value,y:activePen.target.y,width:activePen.target.width,height:activePen.target.height},false)
           meta2d.canvas.calcActiveRect()
-          mergeProps(m,activePen)
+          mergeProps(m,activePen.target)
           meta2d.render()
         }
       },
@@ -107,9 +108,9 @@ const map = [
         bindProp:m,
         event:"change",
         func(value){
-          meta2d.setPenRect(toRaw(activePen),{x:activePen.x,y:value,width:activePen.width,height:activePen.height},false)
+          meta2d.setPenRect(toRaw(activePen.target),{x:activePen.target.x,y:value,width:activePen.target.width,height:activePen.target.height},false)
           meta2d.canvas.calcActiveRect()
-          mergeProps(m,activePen)
+          mergeProps(m,activePen.target)
           meta2d.render()
         }
       },
@@ -123,19 +124,19 @@ const map = [
         },
         event:"change",
         func(value){
-          if(activePen.ratio){
+          if(activePen.target.ratio){
             meta2d.setValue({
-              id:activePen.id,
+              id:activePen.target.id,
               width:value,
-              height:value / activePen.width * activePen.height
+              height:value / activePen.target.width * activePen.target.height
             })
           }else{
             meta2d.setValue({
-              id:activePen.id,
+              id:activePen.target.id,
               width:value
             })
           }
-          mergeProps(m,activePen)
+          mergeProps(m,activePen.target)
         }
       },
       {
@@ -145,19 +146,19 @@ const map = [
         bindProp:m,
         event:"change",
         func(value){
-          if(activePen.ratio){
+          if(activePen.target.ratio){
             meta2d.setValue({
-              id:activePen.id,
+              id:activePen.target.id,
               height:value,
-              width:value / activePen.height * activePen.width
+              width:value / activePen.target.height * activePen.target.width
             })
           }else{
             meta2d.setValue({
-              id:activePen.id,
+              id:activePen.target.id,
               height:value
             })
           }
-          mergeProps(m,activePen)
+          mergeProps(m,activePen.target)
         }
       },
       {
@@ -168,12 +169,12 @@ const map = [
         event:"change",
         func(value){
           // meta2d.setValue({
-          //   id:activePen.id,
+          //   id:activePen.target.id,
           //   ratio:value
           // })
-          activePen.ratio = value
+          activePen.target.ratio = value
           meta2d.render()
-          mergeProps(m,activePen)
+          mergeProps(m,activePen.target)
         }
       },
       {
@@ -334,7 +335,7 @@ const map = [
               [10,10,2,10]
           ]
           if(multiPen.value){
-            for(let i of activePen){
+            for(let i of activePen.target){
               meta2d.setValue({
                 id:i.id,
                 lineDash:dash[value]
@@ -342,9 +343,9 @@ const map = [
             }
             meta2d.render()
           }else{
-            activePen.dash = value
+            activePen.target.dash = value
             meta2d.setValue({
-              id:activePen.id,
+              id:activePen.target.id,
               lineDash:dash[value]
             })
           }
