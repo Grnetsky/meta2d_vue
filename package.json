@@ -13,7 +13,7 @@
     "axios": "^1.4.0",
     "element-plus": "^2.3.7",
     "mind-diagram": "^1.2.0",
-    "mind-plugins-collapse": "^0.0.2",
+    "mind-plugins-collapse": "^0.0.4",
     "mind-plugins-core": "^1.0.25",
     "@meta2d/core": "^1.0.34",
     "@meta2d/flow-diagram": "^1.0.0",
