@@ -43,7 +43,6 @@ onMounted(()=>{
         }
       }else{  // 修改一个
         activePen.target=reactive(args[0])
-        console.log(activePen.target)
         mergeProps(m,defaultConfig)
         mergeProps(m,activePen.target)
         const penRect = meta2d.getPenRect(toRaw(activePen.target))
