@@ -17,6 +17,7 @@ export const defaultIcons =[
                     text: '正方形',
                     width: 100,
                     height: 100,
+                    tag:'mind',
                     name: 'square',
                     form: [
                         {
@@ -35,6 +36,7 @@ export const defaultIcons =[
                     text: '圆角矩形',
                     width: 200,
                     height: 50,
+                    tag:'mind',
                     borderRadius: 0.1,
                     name: 'rectangle',
                 },
@@ -692,6 +694,10 @@ export const defaultIcons =[
                     width: 200,
                     height: 50,
                     name: 'mindNode2',
+                    lineWidth:3,
+                    color:'#ff4000',
+                    textColor: '#000',
+                    fontSize: 16,
                     borderRadius: 0.5,
                 },
             },
