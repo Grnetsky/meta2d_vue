@@ -1,5 +1,10 @@
 export function mergeProps(target,resource) {
     for(const i in target){
+        if(['width','height','x','y'].includes(i)){
+            let rect = meta2d.getPenRect(resource)
+            target[i] = rect[i]
+            continue
+        }
         if(resource[i]){
             target[i] = resource[i]
         }else {
