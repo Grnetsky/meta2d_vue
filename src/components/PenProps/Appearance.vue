@@ -91,7 +91,11 @@ const map = [
         bindProp:m,
         event:"change",
         func(value){
-          meta2d.setPenRect(toRaw(activePen.target),{x:value,y:activePen.target.y,width:activePen.target.width,height:activePen.target.height},false)
+          // meta2d.setPenRect(toRaw(activePen.target),{x:value,y:activePen.target.y,width:activePen.target.width,height:activePen.target.height},false)
+          meta2d.setValue({
+            id:activePen.target.id,
+            x:value
+          })
           meta2d.canvas.calcActiveRect()
           mergeProps(m,activePen.target)
           meta2d.render()
@@ -107,7 +111,11 @@ const map = [
         bindProp:m,
         event:"change",
         func(value){
-          meta2d.setPenRect(toRaw(activePen.target),{x:activePen.target.x,y:value,width:activePen.target.width,height:activePen.target.height},false)
+          // meta2d.setPenRect(toRaw(activePen.target),{x:activePen.target.x,y:value,width:activePen.target.width,height:activePen.target.height},false)
+          meta2d.setValue({
+            id:activePen.target.id,
+            y:value
+          })
           meta2d.canvas.calcActiveRect()
           mergeProps(m,activePen.target)
           meta2d.render()
