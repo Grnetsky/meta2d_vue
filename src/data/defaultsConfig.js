@@ -352,21 +352,7 @@ const menuFunc = {
             window.meta2d.showMap()
         }
     },
-    // usePen: (()=>{
-    //     let flat = false
-    //     console.log("进来了")
-    //     return ()=> {
-    //         console.log("执行了")
-    //         if(!flat){
-    //             console.log("开始画画")
-    //             window.meta2d.drawLine('curve')
-    //         }else {
-    //             console.log("结束画画")
-    //             window.meta2d.drawLine()
-    //         }
-    //         flat = !flat
-    //     }
-    // })(),
+
     // TODO 使用前 判断是否已被占用
     usePen() {
         if (window.meta2d.canvas.drawingLineName) {
