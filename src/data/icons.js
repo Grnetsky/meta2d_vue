@@ -328,6 +328,13 @@ export const defaultIcons =[
                     height: 100,
                     externElement: true,
                     iframe: 'http://le5le.com',
+                    props:[
+                        {   title:"网页地址",
+                            type:"input",
+                            prop:"iframe",
+                            event:"change",
+                        },
+                    ]
                 },
             },
             {
