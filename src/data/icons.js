@@ -219,6 +219,13 @@ export const defaultIcons =[
                     height: 100,
                     name: 'image',
                     image: '/img/logo.png',
+                    props:[
+                        {   title:"图片地址",
+                            type:"input",
+                            prop:"image",
+                            event:"change",
+                        },
+                    ]
                 },
             },
             {

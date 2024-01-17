@@ -10,7 +10,7 @@ const multiPen = ref(false)
 const defaultConfig = deepClone(appearanceProps)  //深拷贝保存默认配置
 let m = reactive(appearanceProps) // 响应式数据源
 let activePen = reactive({target:{}})
-
+let otherProps = reactive({props:[]})
 // 更新属性方法
 function updateFunc(prop){
   return (value)=>{
@@ -43,6 +43,25 @@ onMounted(()=>{
         }
       }else{  // 修改一个
         activePen.target=reactive(args[0])
+        otherProps.props = []
+          if(activePen.target.props){
+            let otherProp = {
+              title:"其他",
+              children:[]
+            }
+            activePen.target.props.forEach((prop)=>{
+              otherProp.children.push({
+                title:prop.title,
+                type:prop.type,
+                prop:prop.prop,
+                bindProp:m,
+                event:prop.event,
+                func:updateFunc(prop.prop)
+              }
+              )
+            })
+            otherProps.props.push(otherProp)
+          }
         mergeProps(m,defaultConfig)
         mergeProps(m,activePen.target)
         const penRect = meta2d.getPenRect(toRaw(activePen.target))
@@ -828,8 +847,9 @@ let showMap = computed(()=>{
        i.multiShow?i.children = i.children.filter(item=>item.multiShow):""
       return i.multiShow
     })
+  }else if(!multiPen.value && otherProps){
+    return map.concat(otherProps.props)
   }
-  return map
 })
 
 </script>
