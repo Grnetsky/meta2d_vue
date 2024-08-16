@@ -90,6 +90,7 @@ const map = computed(()=>{
           option: {
             accept: "image/*"
           },
+          for:Math.random(),// 随机id
           func(e){
             let file = e.target.files[0]
             let fileUrl = URL.createObjectURL(file)  // 创建文件引用

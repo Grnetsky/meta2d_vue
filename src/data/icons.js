@@ -218,7 +218,14 @@ export const defaultIcons =[
                     width: 100,
                     height: 100,
                     name: 'image',
-                    image: '/img/logo.png',
+                    image: 'https://assets.le5lecdn.com/2d/img/logo.png',
+                    props:[
+                        {   title:"图片地址",
+                            type:"input",
+                            prop:"image",
+                            event:"change",
+                        },
+                    ]
                 },
             },
             {
@@ -321,6 +328,13 @@ export const defaultIcons =[
                     height: 100,
                     externElement: true,
                     iframe: 'http://le5le.com',
+                    props:[
+                        {   title:"网页地址",
+                            type:"input",
+                            prop:"iframe",
+                            event:"change",
+                        },
+                    ]
                 },
             },
             {

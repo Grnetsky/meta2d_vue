@@ -10,11 +10,11 @@ const props = defineProps(['formList'])
           <!--          输入框-->
           <el-input v-model="i.bindProp[i.prop]" :placeholder="i.option?.placeholder || '请输入'" v-if="i.type==='input'" @[i.event]="i.func" :type="i.option?.type||'text'"/>
 <!--          文件框-->
-            <el-button v-else-if="i.type==='file'"><label for="input" >
-              <input id="input" style="display: none" type="file" :accept="i.option?.accept || '*/*'" @[i.event]="i.func" >
-                选择文件
-              </label>
-            </el-button>
+          <el-button v-else-if="i.type==='file'"><label :for="i.for || i.title" >
+            <input :id="i.for || i.title" style="display: none" type="file" :accept="i.option?.accept || '*/*'" @[i.event]="i.func" >
+              选择文件
+            </label>
+          </el-button>
 <!--          数字框-->
           <el-input-number :placeholder="i.option?.placeholder || '请输入'" :step="i.option?.step || 1" v-model="i.bindProp[i.prop]" :min="i.option?.min ?? -Infinity" :max="i.option?.max ?? Infinity" @[i.event]="i.func" v-else-if="i.type==='number'"/>
 <!--          选择框-->
