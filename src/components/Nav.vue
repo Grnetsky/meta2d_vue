@@ -5,10 +5,22 @@
       :ellipsis="false"
       index:1
   >
+
+    <div>
+      <el-sub-menu :index="'999'">
+        <template #title>语言</template>
+        <el-menu-item @click="lan('en')">英语</el-menu-item>
+        <el-menu-item @click="lan('ja')">日语</el-menu-item>
+        <el-menu-item @click="lan('ko')">韩语</el-menu-item>
+
+      </el-sub-menu>
+    </div>
+
+
     <div v-for="(item,index) in menu.left">
       <el-sub-menu v-if="item.children"  :index="(index+1)+''">
         <template #title>{{item.name}}</template>
-        <el-menu-item v-for="(c,i) in item.children" :index="`${index+1}-${i+1}`" @click="dispatchFunc(c.action)">{{ c.name }}</el-menu-item>
+        <el-menu-item v-for="(c,i) in item.children" :index="`${index+1}-${i+1}`" @click="dispatchFunc(c.action,c.value)">{{ c.name }}</el-menu-item>
       </el-sub-menu>
       <el-menu-item v-else @click="dispatchFunc(item.action)" :index="index+1+''">{{ item.name }}</el-menu-item>
     </div>
@@ -52,6 +64,8 @@
 import {menu,dispatchFunc} from "../data/defaultsConfig.js"
 import {onMounted, ref} from "vue";
 import {useEventbus} from "../hooks/useEventbus.js";
+import {useI18n} from "vue-i18n";
+const {locale} = useI18n()
 let lockNumber = 0
 let lockStatus = ref("锁定")
 let lockIcon = ref("t-unlock")
@@ -59,6 +73,11 @@ let scaleValue = ref(10)
 
 const lockIcons = ['l-unlock','l-lock','l-wufayidong']
 const lockStatusList = ['编辑','预览','锁定']
+
+function lan(value) {
+  locale.value = value
+  localStorage.setItem('i18n',value)
+}
 function changeLock() {
   lockNumber += 1
   lockNumber = lockNumber % 3
