@@ -14,7 +14,7 @@
     "paths": {
       "@/*": ["src/*"],
       "@meta2d/*": ["../meta2d.js/packages/*"],
-      // "@meta3d/*": ["../meta3d.js/*"],
+       // "@meta3d/*": ["../meta3d.js/*"],
     },
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],

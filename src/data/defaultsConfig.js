@@ -1,9 +1,10 @@
 import axios from "axios";
 import {parseSvg} from "@meta2d/svg";
 import {ElMessage} from "element-plus";
-import {EventAction, PenType} from "@meta2d/core";
+import {deepClone, EventAction, PenType} from "@meta2d/core";
 import {useEventbus} from "../hooks/useEventbus.js";
-
+import { V2M } from "visio2meta2d"
+import D2M from 'dxf'
 
 function getUserDir(path,extend = []) {
     return async () => {
@@ -38,6 +39,18 @@ export const menu = {
             {
                 name: "导入文件",
                 action: "loadFile"
+            },
+            {
+                name:'导入visio',
+                action: "importVisio"
+            },
+            {
+                name:'导入dxf',
+                action: "importDxf"
+            },
+            {
+                name:'刷新dxf',
+                action: "refreshDxf"
             }
         ]
     },
@@ -77,6 +90,11 @@ export const menu = {
             name: "撤销",
             icon: "l-angle-left",
             action: "undo"
+        },
+        {
+            key:'log',
+            action: 'logPaste',
+            name:'打印剪切板'
         },
         {
             key: "redo",
@@ -290,7 +308,24 @@ export function dispatchFunc(act, value, ...args) {
     menuFunc[act](value, ...args)
 }
 
-const menuFunc = {
+export const menuFunc = {
+    logPaste(){
+        navigator.clipboard.read()
+            .then(text => {
+                console.log("剪贴板文本数据: ", text);
+                console.log();
+                return text[0].getType(text[0].types[1])
+            }).then(d=>{
+                const rd = new FileReader()
+            rd.readAsDataURL(d)
+            rd.onload = function(e){
+                console.log(e.target.result)
+            }
+        })
+            .catch(err => {
+                console.error("无法读取剪贴板数据: ", err);
+            });
+    },
     newFile() {
         window.meta2d.open()
     },
@@ -326,6 +361,132 @@ const menuFunc = {
                 return
             }
             ElMessage({message: '添加失败，暂且只支持svg文件', type: "error"})
+        }
+    },
+    async importVisio(){
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = async (event) => {
+            const elem = event.target;
+            if (elem.files && elem.files[0]) {
+
+                // 路由跳转 可能在 openFile 后执行
+                if (elem.files[0].name.endsWith('.vsdx')) {
+                    const dataObj = elem.files[0]
+                    if (dataObj) {
+                        //判断文件类型
+                        let factory = new V2M({
+                            ellipsis:false,
+                        },(e)=>console.log(e));
+                        const res = await factory.load(dataObj)
+                        let viewPen = {}
+                        console.log('解析visio文件：',res)
+                        if(res.length > 0 ){
+                            for (const page of res) {
+                                const pens = await meta2d.addPens(deepClone(page.pens));
+                                viewPen = meta2d.combine(pens)
+                                meta2d.setValue({id:viewPen,background:"#ffffff"})
+                                if(page.unmatch.length > 0){
+                                    const unMatchList = page.unmatch.map(i=>i.origin.name).join(',');
+                                    ElMessage({message: `检测到未识别的图元 ${unMatchList}`, type: "error"})
+                                }
+                                pens.forEach((p)=>{
+                                    if(p.children.length > 0){
+                                        meta2d.pushChildren(p,p.children.map((c)=>meta2d.findOne(c)))
+                                    }
+                                })
+                            }
+
+                            meta2d.centerView()
+                        }
+                        // pens.connects.forEach(connect=>{
+                        //     meta2d.connectLine(meta2d.findOne(connect.from),meta2d.findOne(connect.to),meta2d.findOne(connect.from).anchors[connect.fromAnchor -1 ],
+                        //         meta2d.findOne(connect.to).anchors[connect.toAnchor - 1])
+                        // })
+
+                        // meta2d.centerView()
+                    }
+                }
+            }
+        };
+        input.click();
+    },
+    async importDxf(){
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = async (event) => {
+            const elem = event.target;
+            if (elem.files && elem.files[0]) {
+                const p = {
+                    install(parser){
+                        console.log('hello Plugin',parser)
+                    }
+                }
+                // 路由跳转 可能在 openFile 后执行
+                if (elem.files[0].name.endsWith('.DXF') ||elem.files[0].name.endsWith('.dxf') ) {
+                    const dataObj = elem.files[0]
+                    if (dataObj) {
+                        //判断文件类型
+                        meta2d.setOptions({
+                            background:"#000000",
+                            gridColor: "rgba(201,201,201,0.15)",
+                            grid:true,
+                            rule:true,
+                        })
+// Grab fileText in node.js or browser
+                        const reader = new FileReader();
+                        reader.readAsText(dataObj, "UTF-8")
+                        reader.addEventListener(
+                            "load",
+                            async () => {
+                                // 然后这将显示一个文本文件
+                                const parser = new D2M({
+                                    scale: 10
+                                },(e)=>{
+                                    console.error('error',e)
+                                })
+                                parser.parser.addExtension(p)
+                                const res = await parser.load(dataObj)
+                                console.log('解析dxf文件：',res)
+                                console.log('add',res.success)
+                                console.log('error',res.error)
+                                if(res.success.length > 0 ){
+                                        const pens = await meta2d.addPens((res.success));
+                                        try {
+                                            meta2d.gotoView(pens[Math.floor(pens.length / 2)])
+
+                                        }catch (e) {
+                                            console.log(pens[Math.floor(pens.length / 2)],'xxxxxxxxxxxxxxxxx',pens,pens.length / 2)
+                                        }
+                                }
+                            },
+                            false,
+                        );
+                    }                }
+            }
+        };
+        input.click();
+
+    },
+    async refreshDxf(){
+        meta2d.clear()
+        // 然后这将显示一个文本文件
+        const parser = new D2M()
+        const res = parser.reload()
+        console.log('解析dxf文件：',res)
+        console.log('add',res.success)
+        console.log('error',res.error)
+        if(res.success.length > 0 ){
+            const pens = await meta2d.addPens((res.success));
+            try {
+                meta2d.gotoView(pens[Math.floor(pens.length / 2)])
+
+            }catch (e) {
+                console.log(pens[Math.floor(pens.length / 2)],'xxxxxxxxxxxxxxxxx',pens,pens.length / 2)
+            }
+            console.log('addPens')
+            // meta2d.gotoView(viewPen)
+            // Promise.resolve().then(()=>{meta2d.render()})
         }
     },
     saveFile() {
@@ -575,8 +736,8 @@ export const globalConfigProps = {
     disableScale: false,
     disableDockLine: false,
     disableTranslate: false,
-    minScale: 0.1,
-    maxScale: 10,
+    minScale: 0.01,
+    maxScale: 30,
     autoAnchor: true,
     interval: 10,
     animateInterval: 10,

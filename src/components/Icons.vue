@@ -79,9 +79,9 @@ function doSearch(value){
           <div class="icon_container">
             <div class="icon_item" v-for="(item,index) in icons.list" draggable="true"
                  @dragstart="dragPen(item.data,$event)"
-                 @click.stop="onTouchstart(item.data, $data)"
+                 @click.stop="onTouchstart(item.data, $event)"
 
-                 :index="index" :title="item.name">
+                 :key="index" :title="item.name">
 <!--              这里做了修改-->
               <svg v-if="item.icon" class="l-icon" aria-hidden="true">
                 <use :xlink:href="'#' + item.icon"></use>

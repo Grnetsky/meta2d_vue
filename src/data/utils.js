@@ -25,3 +25,18 @@ export function mergeProps(target,resource) {
         }
     }
 }
+
+export function deepAccess(obj, path) {
+    return path.split('.').reduce(function(prev, curr) {
+        return prev ? prev[curr] : undefined;
+    }, obj);
+}
+
+export function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}

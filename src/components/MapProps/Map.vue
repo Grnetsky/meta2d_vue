@@ -41,7 +41,7 @@ const map = computed(()=>{
           event:"change",
           func:function arg1(value){
             meta2d.fileName = value
-        }
+          }
         },
       ]
     }, {

@@ -17,7 +17,7 @@ export const defaultIcons =[
                     text: '正方形',
                     width: 100,
                     height: 100,
-                    tag:'mind',
+                    tags:['mind'],
                     name: 'square',
                     form: [
                         {
@@ -59,6 +59,7 @@ export const defaultIcons =[
                 data: {
                     text: '三角形',
                     width: 100,
+                    tags:['mind2'],
                     height: 100,
                     name: 'triangle',
                 },
@@ -227,6 +228,10 @@ export const defaultIcons =[
                         },
                     ]
                 },
+                prop:[{
+                    key:'image',
+
+                }]
             },
             {
                 name: 'cube',
@@ -712,7 +717,7 @@ export const defaultIcons =[
                     color:'#ff4000',
                     textColor: '#000',
                     fontSize: 16,
-                    borderRadius: 0.5,
+                    borderRadius: 0.4,
                 },
             },
             {
@@ -749,10 +754,12 @@ export const defaultIcons =[
                 icon: 'l-rectangle',
                 id: 22,
                 data: {
+                    anchors:[{x:0,y:0},{x:1,y:1}],
                     text: '流程',
                     width: 120,
                     height: 40,
-                    name: 'rectangle',
+                    name: 'line',
+                    type:1,
                 },
             },
             {

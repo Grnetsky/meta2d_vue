@@ -38,6 +38,15 @@
         <el-slider v-model="scaleValue" @input="scaleView"/>
       </el-menu-item>
     </el-sub-menu>
+
+    <el-sub-menu>
+      <template #title>
+        dxfScale倍数
+      </template>
+      <el-menu-item index="101">
+        <el-slider v-model="scaleDxf" @input="scaleDxfFunc" :min="0.01" :max="10" :step="0.01"/>
+      </el-menu-item>
+    </el-sub-menu>
     <el-menu-item @click="changeLock" >
 
       <svg  class="l-icon" aria-hidden="true">
@@ -49,13 +58,16 @@
 </template>
 
 <script lang="js" setup>
-import {menu,dispatchFunc} from "../data/defaultsConfig.js"
+import {menu, dispatchFunc, menuFunc} from "../data/defaultsConfig.js"
 import {onMounted, ref} from "vue";
 import {useEventbus} from "../hooks/useEventbus.js";
+import D2M from "dxf"
+import {debounce} from "@/data/utils.js";
 let lockNumber = 0
 let lockStatus = ref("锁定")
 let lockIcon = ref("t-unlock")
 let scaleValue = ref(10)
+let scaleDxf = ref(10)
 
 const lockIcons = ['l-unlock','l-lock','l-wufayidong']
 const lockStatusList = ['编辑','预览','锁定']
@@ -73,17 +85,57 @@ function scaleView(val){
   meta2d.scale((meta2d.store.options.maxScale -  meta2d.store.options.minScale) / 100 *val)
   meta2d.centerView()
 }
+function scaleDxfFunc(val) {
+  console.log(val)
+  a(val)
+}
+
+const a = debounce(((val)=>{
+  const parser = new D2M()
+  parser.setOption({scale:val})
+  menuFunc.refreshDxf()}),200)
 function syncData() {
   menu.right.find((i)=>i.key === 'start').icon =window.meta2d.store.data.fromArrow?('l-to-'+ window.meta2d.store.data.fromArrow) : "l-line"
   menu.right.find((i)=>i.key === 'end').icon =window.meta2d.store.data.toArrow?('l-to-'+ window.meta2d.store.data.toArrow) : "l-line"
 }
 onMounted(()=>{
+  let isPasteAllowed = false;
+
+  const allowPaste = () => {
+    isPasteAllowed = true;
+    console.log("粘贴已允许。");
+  };
+
+  const promptForPastePermission = () => {
+    console.log("请在控制台中输入 'ALLOW_PASTE' 以允许粘贴内容。");
+  };
+
+// 监听控制台打开
+  const detectConsoleOpen = () => {
+    const devtools = /./;
+    devtools.toString = function() {
+      promptForPastePermission();
+      return '';
+    };
+    console.log('%c', devtools);
+  };
+
+// 监听用户输入
+  window.addEventListener('keydown', (event) => {
+    if (event.ctrlKey && event.key === 'v' && !isPasteAllowed) {
+      console.log("请先输入 'ALLOW_PASTE' 来允许粘贴。");
+      event.preventDefault();
+    }
+  });
+
+// 初始化检测
+  detectConsoleOpen();
 
   eventbus.customOn('opened',()=>{
     syncData()
-    meta2d.on("scale",(data)=>{
-      scaleValue.value = +(data.toFixed(1)*(meta2d.store.options.maxScale -  meta2d.store.options.minScale)).toFixed()
-    })
+    // meta2d.on("scale",(data)=>{
+    //   scaleValue.value = +(data.toFixed(1)*(meta2d.store.options.maxScale -  meta2d.store.options.minScale)).toFixed()
+    // })
 
     meta2d.on('lock',()=>{
       meta2d.store.data.locked = 2

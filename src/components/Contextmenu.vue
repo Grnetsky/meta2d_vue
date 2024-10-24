@@ -80,6 +80,9 @@ function copy() {
 function ctxMenuClose() {
   menuPos.visible = false
 }
+function uncombine() {
+  meta2d.uncombine(activePens[0])
+}
 
 </script>
 
@@ -89,6 +92,7 @@ function ctxMenuClose() {
     <div class="ctx_item" v-show="isPens" @click="changeCoverage('bottom')">置底</div>
     <div class="ctx_item" v-show="isPens" @click="changeCoverage('up')">上一图层</div>
     <div class="ctx_item" v-show="isPens" @click="changeCoverage('down')">下一图层</div>
+    <div class="ctx_item" v-show="isPens" @click="uncombine">解绑</div>
     <div class="ctx_item" @click="lock">锁定</div>
     <div class="ctx_item" v-show="isPens" @click="copy">复制</div>
     <div class="ctx_item" @click="paste">粘贴</div>

@@ -7,11 +7,15 @@ export default defineConfig({
   plugins: [vue(),
       devServerMiddleware()],
     resolve: {
-    //     alias: {
-    //         '@': path.resolve(__dirname, './src/'),
-    //         '@meta2d': path.resolve(__dirname, '../meta2d.js/packages')
-    //         // '@meta3d': path.resolve(__dirname, '../meta3d.js'),
-    //     },
+        alias: {
+            '@': path.resolve(__dirname, './src/'),
+            '@meta2d': path.resolve(__dirname, '../meta2d.js/packages'),
+            // 'visio2meta2d': path.resolve(__dirname, '../visio2meta2d'),
+            // '@meta2d/plugin-mind-core': path.resolve(__dirname, '../meta2d.js/packages/plugin/plugin-mind-core'),
+            // '@meta3d': path.resolve(__dirname, '../meta3d.js'),
+            'mind-plugins-collapse': path.resolve(__dirname, '../mind-plugins-collapse'),
+            'mind-diagram': path.resolve('C:\\Users\\Andy\\Desktop\\大屏\\meta2d.js\\packages\\mind-diagram')
+        },
     },
 })
 
